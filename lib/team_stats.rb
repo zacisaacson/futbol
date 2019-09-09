@@ -74,15 +74,11 @@ module TeamStats
         post_and_reg[@games[id].season] = {}
         post_and_reg[@games[id].season][:post_season] = [id]
       elsif @games[id].type == "Postseason" && post_and_reg.has_key?(@games[id].season)
-          post_and_reg[@games[id].season] = {}
-          post_and_reg[@games[id].season][:post_season] = []
-          post_and_reg[@games[id].season][:post_season] << id
+        post_and_reg[@games[id].season][:post_season] << id
       elsif @games[id].type == "Regular Season" && !post_and_reg.has_key?(@games[id].season)
         post_and_reg[@games[id].season] = {}
         post_and_reg[@games[id].season][:regular_season] = [id]
       elsif @games[id].type == "Regular Season" && post_and_reg.has_key?(@games[id].season)
-        post_and_reg[@games[id].season] = {}
-        post_and_reg[@games[id].season][:regular_season] = []
         post_and_reg[@games[id].season][:regular_season] << id
       end
     end
