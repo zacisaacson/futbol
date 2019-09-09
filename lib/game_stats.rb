@@ -1,4 +1,5 @@
 module GameStats
+  
   def highest_total_score
     game = @games.max_by do |id, object|
       object.away_goals + object.home_goals

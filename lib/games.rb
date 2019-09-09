@@ -10,10 +10,7 @@ class Game
               :venue,
               :venue_link
 
-    def initialize(args)
-      @game_id = args[:game_id]
-      # ...
-
+    def initialize(line)
       @game_id = line.split(",")[0]
       @season = line.split(",")[1]
       @type = line.split(",")[2]
@@ -26,11 +23,6 @@ class Game
       @venue_link = line.split(",")[9]
     end
 
-    def self.from_csv_line(line)
-      self.new(
-        game_id: line.split(",")[0],
-        #...
-      )
-    end
+
 
 end

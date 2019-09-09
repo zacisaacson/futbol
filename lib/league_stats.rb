@@ -1,18 +1,3 @@
-# class LeagueStats
-#   attr_reader :teams
-#
-#   def initialize(teams)
-#     @teams = teams
-#   end
-#
-#   def count_of_teams
-#     teams.length
-#   end
-# end
-#
-# league_stats = LeagueStats.new(teams)
-# league_stats.count_of_teams
-
 module LeagueStats
 
   def count_of_teams
@@ -97,21 +82,10 @@ module LeagueStats
 
 "----------------------SUPPORT METHODS-----------------------------------------"
 
-  def goals_per_team
-    @goals_per_team ||= generate_num_goals_per_team
-
-  #  @goals_per_team = (@goals_per_team || generate_num_goals_per_team)
-#  if !@goals_per_team
-#    @goals_per_team = generate..
-#  else
-#    @goals_per_team
-#  end
-  end
 
   def generate_num_goals_per_team
-#    @goals_per_team = {}
-#    return @goals_per_team unless @goals_per_team.empty?
-
+    @goals_per_team = {}
+    return @goals_per_team unless @goals_per_team.empty?
     @goals_per_team = Hash.new(0)
     @game_teams.each do |id, array|
       array.each do |game_obj|
@@ -119,11 +93,6 @@ module LeagueStats
       end
     end
     @goals_per_team
-
-    # @game_teams.each_with_object(Hash.new(0)) do (|id, array|, goals_per_team)
-
-    # end
-
   end
 
   def generate_num_games_per_team
@@ -156,25 +125,24 @@ module LeagueStats
   end
 
   def generate_average_goals
-  #  @averages_total = []
-  #  return @averages_total unless @averages_total.empty?
-    #generate_num_games_per_team
-    #generate_num_goals_per_team
-
-    @averages = {}
-    @averages_home = {}
-    @averages_away = {}
-    @averages_total = [@averages, @averages_home, @averages_away]
-    num_goals_per_team.each do |id, goals|
-      @averages[id] = (goals.to_f / generate_num_games_per_team[0][id]).round(2)
-    end
-    generate_home_and_away_goals[0].each do |id, goals|
-      @averages_away[id] = (goals.to_f / generate_num_games_per_team[1][id]).round(2)
-    end
-    generate_home_and_away_goals[1].each do |id, goals|
-      @averages_home[id] = (goals.to_f / generate_num_games_per_team[2][id]).round(2)
-    end
-    @averages_total
+    @averages_total = []
+   return @averages_total unless @averages_total.empty?
+   generate_num_games_per_team
+   generate_num_goals_per_team
+   @averages = {}
+   @averages_home = {}
+   @averages_away = {}
+   @averages_total = [@averages, @averages_home, @averages_away]
+   generate_num_goals_per_team.each do |id, goals|
+     @averages[id] = (goals.to_f / generate_num_games_per_team[0][id]).round(2)
+   end
+   generate_home_and_away_goals[0].each do |id, goals|
+     @averages_away[id] = (goals.to_f / generate_num_games_per_team[1][id]).round(2)
+   end
+   generate_home_and_away_goals[1].each do |id, goals|
+     @averages_home[id] = (goals.to_f / generate_num_games_per_team[2][id]).round(2)
+   end
+   @averages_total
   end
 
   def generate_allowed_goals

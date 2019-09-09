@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-require_relative '../lib/games'
-=======
->>>>>>> e2d094faa2b766acdaf4c33af1183dd21dd537c2
 require_relative 'test_helper'
 require_relative '../lib/games'
 
