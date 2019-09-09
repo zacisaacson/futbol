@@ -69,13 +69,13 @@ module TeamStats
     post_and_reg = { }
     @game_teams[team_id].each {|game| game_ids << game.game_id}
     game_ids.each do |id|
-      # require "pry"; binding.pry
-      if @games[id].type == "Postseason" && !post_and_reg.has_key?(@games[id].season)
+      if (@games[id].type == "Postseason" && !post_and_reg.has_key?(@games[id].season))
         post_and_reg[@games[id].season] = {}
         post_and_reg[@games[id].season][:post_season] = [id]
       elsif @games[id].type == "Postseason" && post_and_reg.has_key?(@games[id].season)
+        require "pry"; binding.pry
         post_and_reg[@games[id].season][:post_season] << id
-      elsif @games[id].type == "Regular Season" && !post_and_reg.has_key?(@games[id].season)
+      elsif (@games[id].type == "Regular Season" && !post_and_reg.has_key?(@games[id].season))
         post_and_reg[@games[id].season] = {}
         post_and_reg[@games[id].season][:regular_season] = [id]
       elsif @games[id].type == "Regular Season" && post_and_reg.has_key?(@games[id].season)
