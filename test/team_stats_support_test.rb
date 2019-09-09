@@ -15,5 +15,11 @@ class TeamStatsSupportTest < Minitest::Test
     assert_equal ({}), @stat_tracker.generate_post_and_regular("18")
   end
 
+  def test_worst_and_best_season
 
+  end
+
+  def test_best_and_worst_opponent
+
+  end
 end
