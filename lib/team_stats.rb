@@ -91,30 +91,54 @@ module TeamStats
 
   def generate_per_season_hash(team_id)
     post_and_reg = generate_post_and_regular(team_id)
-    game_ids = []
-    @game_teams[team_id].each {|game| game_ids << game.game_id}
-    game_ids.uniq
-    game_teams = @game_teams.select {|team, array| team == team_id }
-    selected_games = game_teams.select {|team, array| }
-    game_ids.each do |game_id|
-      if @games[game_id].type == "Postseason"
-        selected_games = post_and_reg[@games[game_id].season][:postseason]
-        post_and_reg[@games[game_id].season][:postseason][:win_percentage] = calculate_win_percent(selected_games)
-        post_and_reg[@games[game_id].season][:postseason][:total_goals_scored] = generate_num_goals_per_team(selected_games)
-        post_and_reg[@games[game_id].season][:postseason][:total_goals_against] = generate_allowed_goals(game_teams[team_id])
-        post_and_reg[@games[game_id].season][:postseason][:average_goals_scored] = generate_average_goals(selected_games)
-        post_and_reg[@games[game_id].season][:postseason][:average_goals_against]= generate_average_allowed(selected_games, game_teams[team_id])
-      elsif @games[game_id].type == "Regular Season"
-        selected_games = post_and_reg[@games[game_id].season][:regular_season]
-        post_and_reg[@games[game_id].season][:regular_season][:win_percentage] = calculate_win_percent(selected_games)
-        post_and_reg[@games[game_id].season][:regular_season][:total_goals_scored] = generate_num_goals_per_team(selected_games)
-        post_and_reg[@games[game_id].season][:regular_season][:total_goals_against] = generate_allowed_goals(game_teams[team_id])
-        post_and_reg[@games[game_id].season][:regular_season][:average_goals_scored] = generate_average_goals(selected_games)
-        post_and_reg[@games[game_id].season][:regular_season][:average_goals_against] = generate_average_allowed(selected_games, game_teams[team_id])
+    # post_and_reg.each do |season, hash|
+    #   hash.each do |reg_or_post, gameids_array|
+    #     gameids_array.each do |game_id|
+    # game_ids = []
+    # @game_teams[team_id].each {|game| game_ids << game.game_id}
+    # game_ids.uniq                       @games(gameids_array.sample).season
+    # game_teams = @game_teams.select {|team, array| team == team_id }
+    # game_teams = game_teams.select {|game| @games[game.game_id].season ==   game }
+    # selected_games = game_teams.select {|team, array| }
+
+
++{"20162017"=>{:regular_season=>["2016030171", "2016030174"], :post_season=>["2016030172", "2016030173"]}, "20142015"=>{:post_season=>["2014030243"]}}
+
+    selected = { :post => [], :regular => []}
+    post_and_reg.each do |season, hash|
+      hash.each do |reg_or_post, gameids_array|
+        if reg_or_post == :postseason
+          selected_games = @game_teams.select {|game_id, game_objs| gameids_array.include?(game_id)}
+          gameids_array.each do |game_id|
+            if @games[game_id].type == "Postseason"
+              # selected_games = selected_games.select {|game_id, game_objs| @games[]}
+              post_and_reg[@games[game_id].season][:postseason][:win_percentage] = calculate_win_percent(selected_games)
+              post_and_reg[@games[game_id].season][:postseason][:total_goals_scored] = generate_num_goals_per_team(selected_games)
+              post_and_reg[@games[game_id].season][:postseason][:total_goals_against] = generate_allowed_goals(game_teams[team_id])
+              post_and_reg[@games[game_id].season][:postseason][:average_goals_scored] = generate_average_goals(selected_games)
+              post_and_reg[@games[game_id].season][:postseason][:average_goals_against]= generate_average_allowed(selected_games, game_teams[team_id])
+            end
+          end
       end
-    end
-    [post_season_data, regular_season_data]
+      post_and_reg.each do |season, hash|
+        hash.each do |reg_or_post, gameids_array|
+          if reg_or_post == :regular_season
+            selected_games = @game_teams.select {|game_id, game_objs| gameids_array.include?(game_id) }
+              gameids_array.each do |game_id|
+            if @games[game_id].type == "Regular Season"
+              # selected_games = @game_teams.select {|game_id, game_objs| gameids_array.include?(game_id)}
+              post_and_reg[@games[game_id].season][:regular_season][:win_percentage] = calculate_win_percent(selected_games)
+              post_and_reg[@games[game_id].season][:regular_season][:total_goals_scored] = generate_num_goals_per_team(selected_games)
+              post_and_reg[@games[game_id].season][:regular_season][:total_goals_against] = generate_allowed_goals(game_teams[team_id])
+              post_and_reg[@games[game_id].season][:regular_season][:average_goals_scored] = generate_average_goals(selected_games)
+              post_and_reg[@games[game_id].season][:regular_season][:average_goals_against] = generate_average_allowed(selected_games, game_teams[team_id])
+            end
+          end
+        end
+      end
+      post_and_reg
   end
+    # selected_games = game_teams.select {|game| @games[game.game_id].season == SEASON?}
 
 
 
