@@ -27,7 +27,7 @@ class StatTrackerTest < MiniTest::Test
     assert_instance_of Game, stat_tracker_2.games.values.sample
     assert_instance_of Team, stat_tracker_2.teams.values.sample
     assert_instance_of GameTeams, stat_tracker_2.game_teams.values.sample[0]
-    assert_equal 7441, stat_tracker_2.games.length
+    assert_equal 12, stat_tracker_2.games.length
     assert_equal 32, stat_tracker_2.teams.length
     count = 0
     stat_tracker_2.game_teams.each do |id, array|
@@ -35,6 +35,6 @@ class StatTrackerTest < MiniTest::Test
         count += 1
       end
     end
-    assert_equal 14882, count
+    assert_equal 24, count
   end
 end
