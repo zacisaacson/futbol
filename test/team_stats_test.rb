@@ -111,10 +111,6 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.head_to_head("18")
 #   end
-  def test_generate_post_and_regular
-    assert_equal ({}), @stat_tracker.generate_post_and_regular("18")
-  end
-
 
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
@@ -202,15 +198,4 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.seasonal_summary("18")
 #   end
-
-# helper methods
-  #
-  # def test_worst_and_best_season
-  #
-  # end
-  #
-  # def test_best_and_worst_opponent
-  #
-  # end
-
 end
