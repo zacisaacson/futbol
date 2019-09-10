@@ -7,9 +7,8 @@ module TeamStats
     info["teamName"] = @teams[team_id].teamName
     info["abbreviation"] = @teams[team_id].abbreviation
     info["link"] = @teams[team_id].link
-    info
+    # info
   end
-
 
   def best_season(team_id)
     worst_and_best_season(team_id)[1]
@@ -64,6 +63,8 @@ module TeamStats
     end
   end
 
+"------------------------SUPPORT METHODS--------------------------------------"
+
   def generate_post_and_regular(team_id)
     game_ids = []
     post_and_reg = { }
@@ -90,9 +91,6 @@ module TeamStats
 
   end
 
-
-
-
   def generate_goals_difference(team_id)
     game_teams = @game_teams[team_id]
     games = []
@@ -103,7 +101,7 @@ module TeamStats
         :team_goals => 0,
         :opponent_goals => 0 }
       end
-      # require "pry"; binding.pry
+
       games.each do |game|
         if team_id == game.home_team_id
           goals[game.game_id][:team_goals] = game.home_goals
@@ -152,8 +150,7 @@ module TeamStats
         elsif team_id == game.away_team_id && game.home_goals == game.away_goals
           opponent_games[game.home_team_id] += 1
           opponent_wins[game.home_team_id] += 0
-          team_wins[game.home_team_id] += 0
-
+          team_wins[game.home_team_id] += 0\
         end
       end
       [opponent_wins, opponent_games,team_wins]
@@ -172,7 +169,6 @@ module TeamStats
       max = opponent_percent.max_by{ |opp, percent| percent }[0]
       min_team = @teams[min].teamName
       max_team = @teams[max].teamName
-      # require "pry"; binding.pry
       [min_team, max_team, opponent_percent,team_percent]
     end
 
