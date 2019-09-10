@@ -102,7 +102,7 @@ module TeamStats
     # selected_games = game_teams.select {|team, array| }
 
 
-+{"20162017"=>{:regular_season=>["2016030171", "2016030174"], :post_season=>["2016030172", "2016030173"]}, "20142015"=>{:post_season=>["2014030243"]}}
+# +{"20162017"=>{:regular_season=>["2016030171", "2016030174"], :post_season=>["2016030172", "2016030173"]}, "20142015"=>{:post_season=>["2014030243"]}}
 
     selected = { :post => [], :regular => []}
     post_and_reg.each do |season, hash|
@@ -119,6 +119,7 @@ module TeamStats
               post_and_reg[@games[game_id].season][:postseason][:average_goals_against]= generate_average_allowed(selected_games, game_teams[team_id])
             end
           end
+        end
       end
       post_and_reg.each do |season, hash|
         hash.each do |reg_or_post, gameids_array|
@@ -137,7 +138,9 @@ module TeamStats
         end
       end
       post_and_reg
-  end
+      end
+    end
+  end 
     # selected_games = game_teams.select {|game| @games[game.game_id].season == SEASON?}
 
 
