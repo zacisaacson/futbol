@@ -75,12 +75,4 @@ class TeamStatsSupportTest < Minitest::Test
 
     assert_equal ["20162017", "20162017", seasons], @stat_tracker.worst_and_best_season("24")
   end
-
-  def test_best_and_worst_opponent
-    skip
-    best_opponent = "3"
-    worst_opponent = "6"
-
-    assert_equal [best_opponent, worst_opponent], @stat_tracker.test_best_and_worst_opponent
-  end
 end
