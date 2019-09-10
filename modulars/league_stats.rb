@@ -51,15 +51,15 @@ module LeagueStats
 
 
   def winningest_team
-    highest = calculate_percents[2].max_by {|id, percent| percent}[0]
+    highest = calculate_win_percent[2].max_by {|id, percent| percent}[0]
     @teams[highest].teamName
   end
 
   def best_fans
-    calculate_percents
+    calculate_win_percent
     home_away_difference = Hash.new(0)
-    calculate_percents[1].each do |k, v|
-      home_away_difference[k] = (v - calculate_percents[0][k]).abs
+    calculate_win_percent[1].each do |k, v|
+      home_away_difference[k] = (v - calculate_win_percent[0][k]).abs
     end
     team = home_away_difference.max_by {|id, difference| difference}[0]
     @teams[team].teamName
@@ -83,11 +83,11 @@ module LeagueStats
 "----------------------SUPPORT METHODS-----------------------------------------"
 
 
-  def generate_num_goals_per_team
+  def generate_num_goals_per_team(game_teams = @game_teams)
     @goals_per_team = {}
     return @goals_per_team unless @goals_per_team.empty?
     @goals_per_team = Hash.new(0)
-    @game_teams.each do |id, array|
+    game_teams.each do |id, array|
       array.each do |game_obj|
         @goals_per_team[game_obj.team_id] += game_obj.goals
       end
@@ -95,14 +95,14 @@ module LeagueStats
     @goals_per_team
   end
 
-  def generate_num_games_per_team
+  def generate_num_games_per_team(game_teams = @game_teams)
     @game_counts = []
-    return @game_counts unless @game_counts.empty?
+    @game_counts unless @game_counts.empty?
     @games_per_team = Hash.new(0)
     @games_per_team_away = Hash.new(0)
     @games_per_team_home = Hash.new(0)
     @game_counts = [@games_per_team, @games_per_team_away, @games_per_team_home]
-    @game_teams.each do |id, array|
+    game_teams.each do |id, array|
       array.each do |object|
         if object.hoa == "away"
           @games_per_team_away[object.team_id] += 1
@@ -121,44 +121,44 @@ module LeagueStats
   end
 
   def average_goals
-    @averages_total ||= generate_average_goals
+    @averages_total[0] ||= generate_average_goals[0]
   end
 
-  def generate_average_goals
-    @averages_total = []
+  def generate_average_goals(game_teams = @game_teams)
+   @averages_total = []
    return @averages_total unless @averages_total.empty?
-   generate_num_games_per_team
-   generate_num_goals_per_team
+   num_games = generate_num_games_per_team(game_teams)
+   goals = generate_num_goals_per_team(game_teams)
    @averages = {}
    @averages_home = {}
    @averages_away = {}
    @averages_total = [@averages, @averages_home, @averages_away]
-   generate_num_goals_per_team.each do |id, goals|
-     @averages[id] = (goals.to_f / generate_num_games_per_team[0][id]).round(2)
+   goals.each do |id, goals|
+     @averages[id] = (goals.to_f / num_games[0][id]).round(2)
    end
    generate_home_and_away_goals[0].each do |id, goals|
-     @averages_away[id] = (goals.to_f / generate_num_games_per_team[1][id]).round(2)
+     @averages_away[id] = (goals.to_f / num_games[1][id]).round(2)
    end
    generate_home_and_away_goals[1].each do |id, goals|
-     @averages_home[id] = (goals.to_f / generate_num_games_per_team[2][id]).round(2)
+     @averages_home[id] = (goals.to_f / num_games[2][id]).round(2)
    end
    @averages_total
   end
 
-  def generate_allowed_goals
+  def generate_allowed_goals(games = @games)
     allowed_goals = Hash.new(0)
-    @games.each do |id, obj|
+    games.each do |id, obj|
       allowed_goals[obj.home_team_id] += obj.away_goals
       allowed_goals[obj.away_team_id] += obj.home_goals
     end
     allowed_goals
   end
 
-  def generate_average_allowed
-    generate_num_games_per_team
+  def generate_average_allowed(game_teams = @game_teams, games = @games)
+    num_games = generate_num_games_per_team(game_teams)
     averages = {}
-    generate_allowed_goals.each do |team, allowed|
-      averages[team] = allowed.to_f / generate_num_games_per_team[0][team]
+    generate_allowed_goals(games).each do |team, allowed|
+      averages[team] = allowed.to_f / num_games[0][team]
     end
     averages
   end
@@ -175,7 +175,7 @@ module LeagueStats
   end
 
 
-  def generate_wins
+  def generate_wins(game_teams = @game_teams)
     @wins = []
     return @wins unless @wins.empty?
     @wins_by_team = Hash.new(0)
@@ -183,7 +183,7 @@ module LeagueStats
     @wins_by_away = Hash.new(0)
     @wins = [@wins_by_away, @wins_by_home, @wins_by_team]
 
-    @game_teams.each do |id, array|
+    game_teams.each do |id, array|
       array.each do |object|
         if object.result == "WIN"
           @wins_by_team[id] += 1
@@ -205,8 +205,8 @@ module LeagueStats
     @wins
   end
 
-  def calculate_percents
-    generate_num_games_per_team
+  def calculate_win_percent(game_teams = @game_teams)
+    generate_num_games_per_team(game_teams)
     @percents = []
     return @percents unless @percents.empty?
     @percent_by_away = {}
