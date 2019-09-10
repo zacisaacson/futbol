@@ -116,6 +116,11 @@ class TeamStatsTest < MiniTest::Test
   end
 
 
+  def test_generate_per_season_hash
+    assert_equal ({}), @stat_tracker.generate_per_season_hash("20")
+  end
+  
+
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
 # following keys: :win_percentage, :total_goals_scored, :total_goals_against,
