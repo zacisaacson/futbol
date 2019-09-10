@@ -150,7 +150,7 @@ module TeamStats
         elsif team_id == game.away_team_id && game.home_goals == game.away_goals
           opponent_games[game.home_team_id] += 1
           opponent_wins[game.home_team_id] += 0
-          team_wins[game.home_team_id] += 0\
+          team_wins[game.home_team_id] += 0
         end
       end
       [opponent_wins, opponent_games,team_wins]
