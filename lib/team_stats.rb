@@ -7,7 +7,7 @@ module TeamStats
     info["teamName"] = @teams[team_id].teamName
     info["abbreviation"] = @teams[team_id].abbreviation
     info["link"] = @teams[team_id].link
-    # info
+    info
   end
 
   def best_season(team_id)
