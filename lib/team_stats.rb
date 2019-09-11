@@ -67,6 +67,15 @@ module TeamStats
   def generate_post_and_regular(team_id)
     game_ids = []
     post_and_reg = {}
+    seasons = []
+    @games.each do |game_id, game|
+      seasons << game.season
+    end
+    seasons.each do |season|
+      post_and_reg[season] = {}
+      post_and_reg[season][:postseasons] = []
+      post_and_reg[season][:regular_season] = []
+    end
     @game_teams[team_id].each {|game| game_ids << game.game_id}
     game_ids.each do |game_id|
       if @games[game_id].type == "Postseason" && !post_and_reg.has_key?(@games[game_id].season)
