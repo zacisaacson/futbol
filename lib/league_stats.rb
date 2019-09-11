@@ -83,10 +83,13 @@ module LeagueStats
 "----------------------SUPPORT METHODS-----------------------------------------"
 
 
-  def generate_num_goals_per_team(game_teams = @game_teams)
+  def generate_num_goals_per_team(team_id = nil , game_teams = @game_teams)
     @goals_per_team = {}
     return @goals_per_team unless @goals_per_team.empty?
     @goals_per_team = Hash.new(0)
+    if team_id != nil
+      game_teams = game_teams.select {|team_ID, array| team_ID == team_id}
+    end
     game_teams.each do |id, array|
       array.each do |game_obj|
         @goals_per_team[game_obj.team_id] += game_obj.goals
@@ -95,13 +98,16 @@ module LeagueStats
     @goals_per_team
   end
 
-  def generate_num_games_per_team(game_teams = @game_teams)
+  def generate_num_games_per_team(team_id = nil , game_teams = @game_teams)
     @game_counts = []
     @game_counts unless @game_counts.empty?
     @games_per_team = Hash.new(0)
     @games_per_team_away = Hash.new(0)
     @games_per_team_home = Hash.new(0)
     @game_counts = [@games_per_team, @games_per_team_away, @games_per_team_home]
+    if team_id != nil
+      game_teams = game_teams.select {|team_ID, array| team_ID == team_id}
+    end
     game_teams.each do |id, array|
       array.each do |object|
         if object.hoa == "away"
@@ -175,14 +181,16 @@ module LeagueStats
   end
 
 
-  def generate_wins(game_teams = @game_teams)
+  def generate_wins(team_id = nil , game_teams = @game_teams)
     @wins = []
     return @wins unless @wins.empty?
     @wins_by_team = Hash.new(0)
     @wins_by_home = Hash.new(0)
     @wins_by_away = Hash.new(0)
     @wins = [@wins_by_away, @wins_by_home, @wins_by_team]
-
+    if team_id != nil
+      game_teams = game_teams.select {|team_ID, array| team_ID == team_id}
+    end
     game_teams.each do |id, array|
       array.each do |object|
         if object.result == "WIN"
@@ -205,23 +213,24 @@ module LeagueStats
     @wins
   end
 
-  def calculate_win_percent(game_teams = @game_teams)
-    generate_num_games_per_team(game_teams)
-    @percents = []
-    return @percents unless @percents.empty?
+  def calculate_win_percent(team_id, game_teams = @game_teams)
+    num_wins = generate_wins(team_id, game_teams)
+    num_teams = generate_num_games_per_team(team_id, game_teams)
+    # require "pry"; binding.pry
+    # return @percents unless @percents.empty?
     @percent_by_away = {}
     @percent_by_home = {}
     @percent_by_team = {}
-    @percents = [@percent_by_away, @percent_by_home, @percent_by_team]
-    generate_wins[0].each do |k,v|
-      @percent_by_away[k] = (v / generate_num_games_per_team[1][k].to_f * 100).round(2)
+    num_wins[0].each do |k,v|
+      @percent_by_away[k] = (v / num_teams[1][k].to_f).round(2)
     end
-    generate_wins[1].each do |k,v|
-      @percent_by_home[k] = (v / generate_num_games_per_team[2][k].to_f * 100).round(2)
+    num_wins[1].each do |k,v|
+      @percent_by_home[k] = (v / num_teams[2][k].to_f).round(2)
     end
-    generate_wins[2].each do |k,v|
-      @percent_by_team[k] = (v / generate_num_games_per_team[0][k].to_f * 100).round(2)
+    num_wins[2].each do |k,v|
+      @percent_by_team[k] = (v / num_teams[0][k].to_f).round(2)
     end
-    @percents
+    # require "pry"; binding.pry
+    [@percent_by_away, @percent_by_home, @percent_by_team]
   end
 end
