@@ -73,22 +73,19 @@ module TeamStats
     end
     seasons.each do |season|
       post_and_reg[season] = {}
-      post_and_reg[season][:postseasons] = []
+      post_and_reg[season][:postseason] = []
       post_and_reg[season][:regular_season] = []
     end
     @game_teams[team_id].each {|game| game_ids << game.game_id}
     game_ids.each do |game_id|
-      if @games[game_id].type == "Postseason" && !post_and_reg.has_key?(@games[game_id].season)
-        post_and_reg[@games[game_id].season] = {}
+      # require "pry"; binding.pry
+      if @games[game_id].type == "Postseason" &&  (post_and_reg[@games[game_id].season][:postseason] == nil)
         post_and_reg[@games[game_id].season][:postseason] = [game_id]
-      elsif @games[game_id].type == "Postseason" && post_and_reg.has_key?(@games[game_id].season)
-        post_and_reg[@games[game_id].season][:postseason] = [] unless post_and_reg[@games[game_id].season].has_key?(:postseason)
+      elsif @games[game_id].type == "Postseason" && !(post_and_reg[@games[game_id].season][:postseason] == nil)
         post_and_reg[@games[game_id].season][:postseason] << game_id
-      elsif @games[game_id].type == "Regular Season" && !post_and_reg.has_key?(@games[game_id].season)
-        post_and_reg[@games[game_id].season] = {}
+      elsif @games[game_id].type == "Regular Season" && (post_and_reg[@games[game_id].season][:regular_season] == nil)
         post_and_reg[@games[game_id].season][:regular_season] = [game_id]
-      elsif @games[game_id].type == "Regular Season" && post_and_reg.has_key?(@games[game_id].season)
-        post_and_reg[@games[game_id].season][:regular_season] = [] unless post_and_reg[@games[game_id].season].has_key?(:regular_season)
+      elsif @games[game_id].type == "Regular Season" && !(post_and_reg[@games[game_id].season][:regular_season] == nil)
         post_and_reg[@games[game_id].season][:regular_season] << game_id
       end
     end
@@ -126,7 +123,11 @@ module TeamStats
   end
 
   def win_percent(game_teams)
-    (wins(game_teams).to_f/game_num(game_teams)).round(2)
+    if game_num(game_teams) == 0
+      return 0.0
+    else
+      (wins(game_teams).to_f/game_num(game_teams)).round(2)
+    end
   end
 
   def wins(game_teams)
@@ -168,7 +169,11 @@ module TeamStats
 
 
   def generate_average(num,divisor)
-    (num/divisor.to_f).round(2)
+    if divisor == 0
+      return 0.0
+    else
+      (num/divisor.to_f).round(2)
+    end
   end
 
   def generate_goals_difference(team_id)
