@@ -34,21 +34,24 @@ module SeasonStats
     coach_games = Hash.new(0)
     coach_win_percent = {}
     games = []
+    @games.each do |game_id, game|
+      if game.season == season
+        games << game_id
+      end
+    end
     game_teams = generate_games_in_season(season)
-    games.each do |game_id|
+    games.each do |game_id, game|
       team_ids = []
       team_ids << @games[game_id].home_team_id
       team_ids << @games[game_id].away_team_id
-      game_teams.each do |team_id, array|
-        array.each do |game|
-          if team_ids.include?(team_id) && games.include?(game.game_id)
-            if game.result == "WIN"
-              coach_wins[game.head_coach] += 1
-              coach_games[game.head_coach] += 1
-            elsif game.result != "WIN"
-              coach_wins[game.head_coach] += 0
-              coach_games[game.head_coach] += 1
-            end
+      game_teams.each do |game|
+        if team_ids.include?(game.team_id) && games.include?(game.game_id)
+          if game.result == "WIN"
+            coach_wins[game.head_coach] += 1
+            coach_games[game.head_coach] += 1
+          elsif game.result != "WIN"
+            coach_wins[game.head_coach] += 0
+            coach_games[game.head_coach] += 1
           end
         end
       end
