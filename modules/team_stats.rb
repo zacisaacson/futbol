@@ -10,7 +10,6 @@ module TeamStats
     info
   end
 
-
   def best_season(team_id)
     worst_and_best_season(team_id)[1]
   end
@@ -63,6 +62,8 @@ module TeamStats
       summary[@games[game.game_id].season]
     end
   end
+
+"------------------------SUPPORT METHODS--------------------------------------"
 
   def generate_post_and_regular(team_id)
     game_ids = []

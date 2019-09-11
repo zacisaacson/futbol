@@ -1,8 +1,14 @@
 require 'csv'
+<<<<<<< HEAD
 require_relative 'game_stats'
 require_relative 'league_stats'
 require_relative 'team_stats'
 require_relative 'season_stats'
+=======
+require_relative '../modulars/game_stats'
+require_relative '../modulars/league_stats'
+require_relative '../modulars/team_stats'
+>>>>>>> master
 
 
 class StatTracker
