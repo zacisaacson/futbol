@@ -7,7 +7,7 @@ require_relative '../lib/game_teams'
 class TeamStatsTest < MiniTest::Test
 
   def setup
-    locations = { games: './data/games.csv', teams: './data/teams.csv', game_teams: './data/game_teams.csv' }
+    locations = { games: './data/dummy_games.csv', teams: './data/teams.csv', game_teams: './data/dummy_game_teams.csv' }
     @stat_tracker = StatTracker.from_csv(locations)
   end
 
@@ -111,6 +111,15 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.head_to_head("18")
 #   end
+
+  def test_generate_post_and_regular
+    assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
+  end
+
+  def test_generate_per_season_hash
+    assert_equal ({}), @stat_tracker.generate_per_season_hash("20")
+  end
+  
 
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
