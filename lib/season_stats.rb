@@ -19,21 +19,63 @@ module SeasonStats
     end
     difference = {}
     team_ids.uniq.each do |id|
-      difference[id] = (seasonal_summary(id)[season][:postseason][:win_percentage] - seasonal_summary(id)[season][:regular_season][:win_percentage]).round(2)
+      difference[id] = (seasonal_summary(id)[season][:postseason][:win_percentage] - seasonal_summary(id)[season][:regular_season][:win_percentage])
     end
     difference
   end
 
   def biggest_surprise(season)
-    require "pry"; binding.pry
     max = generate_difference(season).max_by {|team, difference| difference }[0]
     @teams[max].teamName
   end
 
+  def generate_wins_by_coach(season)
+    coach_wins = Hash.new(0)
+    coach_games = Hash.new(0)
+    coach_win_percent = {}
+    games = []
+    @games.each do |game_id, game|
+      if game.season == season
+        games << game_id
+      end
+    end
+    games.each do |game_id|
+      team_ids = []
+      team_ids << @games[game_id].home_team_id
+      team_ids << @games[game_id].away_team_id
+      game_teams = []
+      @game_teams.each do |team_id, array|
+        array.each do |game|
+          if team_ids.include?(team_id) && games.include?(game.game_id)
+            game_teams.each do |game|
+              if game.result == "WIN"
+                coach_wins[game.head_coach] += 1
+                coach_games[game.head_coach] += 1
+              elsif game.result != "WIN"
+                coach_wins[game.head_coach] += 0
+                coach_games[game.head_coach] += 1
+              end
+            end
+          end
+        end
+      end
+    end
+    coach_games.each do |coach, game_num|
+      coach_win_percent[coach] = coach_wins[coach] / coach_games[coach]
+    end
+    coach_win_percent
+  end
+
+
+
   def winningest_coach(season)
+    max = generate_wins_by_coach(season).max_by {|coach, percent| percent}[0]
+    max
   end
 
   def worst_coach(season)
+    min = generate_wins_by_coach(season).min_by {|coach, percent| percent}[0]
+    min
   end
 
   def most_accurate_team(season)
