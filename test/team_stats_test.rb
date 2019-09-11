@@ -12,69 +12,69 @@ class TeamStatsTest < MiniTest::Test
   end
 
 # hash with key/value pairs for each of the attributes of a team – Hash
-  # def test_team_info
-  #   skip
-  #   expected = {
-  #     "team_id" => "18",
-  #     "franchiseId" => "34",
-  #     "teamName" => "Minnesota United FC",
-  #     "abbreviation" => "MIN",
-  #     "link" => "/api/v1/teams/18"
-  #   }
-  #   assert_equal expected, @stat_tracker.team_info("18")
-  # end
-
-# season with the highest win percentage for a team – Integer
-  # def test_best_season
-  #   assert_equal "20132014", @stat_tracker.best_season("6")
-  # end
+#   def test_team_info
+#     skip
+#     expected = {
+#       "team_id" => "18",
+#       "franchiseId" => "34",
+#       "teamName" => "Minnesota United FC",
+#       "abbreviation" => "MIN",
+#       "link" => "/api/v1/teams/18"
+#     }
+#     assert_equal expected, @stat_tracker.team_info("18")
+#   end
 #
-# # season with the lowest win percentage for a team – Integer
-  # def test_worst_season
-  #   assert_equal "20142015", @stat_tracker.worst_season("6")
-  # end
-#
-# # average win percentage of all games for a team – Float
-  # def test_average_win_percentage
-  #   assert_equal 0.49, @stat_tracker.average_win_percentage("6")
-  # end
-#
-# # highest number of goals a particular team has scored in a single game – Integer
-  # def test_most_goals_scored
-  #   assert_equal 7, @stat_tracker.most_goals_scored("18")
-  # end
-#
-# # lowest numer of goals a particular team has scored in a single game – Integer
-  # def test_fewest_goals_scored
-  #   assert_equal 0, @stat_tracker.fewest_goals_scored("18")
-  # end
-#
-# # name of the opponent that has the lowest win percentage against the given
-# # team – String
-  # def test_favorite_opponent
-  #   assert_equal "DC United", @stat_tracker.favorite_opponent("18")
-  # end
+# # season with the highest win percentage for a team – Integer
+#   def test_best_season
+#     assert_equal "20132014", @stat_tracker.best_season("6")
+#   end
 # #
-# # # name of the opponent that has the highest win percentage against the given
+# # # season with the lowest win percentage for a team – Integer
+#   def test_worst_season
+#     assert_equal "20142015", @stat_tracker.worst_season("6")
+#   end
+# #
+# # # average win percentage of all games for a team – Float
+#   def test_average_win_percentage
+#     assert_equal 0.49, @stat_tracker.average_win_percentage("6")
+#   end
+# #
+# # # highest number of goals a particular team has scored in a single game – Integer
+#   def test_most_goals_scored
+#     assert_equal 7, @stat_tracker.most_goals_scored("18")
+#   end
+# #
+# # # lowest numer of goals a particular team has scored in a single game – Integer
+#   def test_fewest_goals_scored
+#     assert_equal 0, @stat_tracker.fewest_goals_scored("18")
+#   end
+# #
+# # # name of the opponent that has the lowest win percentage against the given
 # # # team – String
+#   def test_favorite_opponent
+#     assert_equal "DC United", @stat_tracker.favorite_opponent("18")
+#   end
+# # #
+# # # # name of the opponent that has the highest win percentage against the given
+# # # # team – String
 #   def test_rival
 #     assert_equal "LA Galaxy", @stat_tracker.rival("18")
 #   end
-#
-# biggest difference between team goals and opponent goals for a win for the
-# given team – Integer
+# #
+# # biggest difference between team goals and opponent goals for a win for the
+# # given team – Integer
 #   def test_biggest_team_blowout
 #     assert_equal 5, @stat_tracker.biggest_team_blowout("18")
 #   end
-# # #
-# #  biggest difference between team goals and opponent goals for a loss for the
-# # given team – Integer
+# # # #
+# # #  biggest difference between team goals and opponent goals for a loss for the
+# # # given team – Integer
 #   def test_worst_loss
 #     assert_equal 4, @stat_tracker.worst_loss("18")
 #   end
-#
-# record (as a hash - win/loss) against all opponents with the opponents’ names
-# as keys and the win percentage against that opponent as a value – Hash
+# #
+# # record (as a hash - win/loss) against all opponents with the opponents’ names
+# # as keys and the win percentage against that opponent as a value – Hash
 #   def test_head_to_head
 #     expected = {
 #      "Atlanta United"=>0.5,
@@ -110,11 +110,11 @@ class TeamStatsTest < MiniTest::Test
 #      "Columbus Crew SC"=>0.5
 #     }
 #     assert_equal expected, @stat_tracker.head_to_head("18")
+# #   end
+#   def test_generate_post_and_regular
+#     assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
 #   end
-  # def test_generate_post_and_regular
-  #   assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
-  # end
-  #
+  # #
   #
   # def test_generate_inner_hash_for_summary
   #   assert_equal ({}), @stat_tracker.seasonal_summary("20")
@@ -124,7 +124,7 @@ class TeamStatsTest < MiniTest::Test
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
 # following keys: :win_percentage, :total_goals_scored, :total_goals_against,
-# # :average_goals_scored, :average_goals_against – Hash
+# # # :average_goals_scored, :average_goals_against – Hash
   def test_seasonal_summary
     expected = {"20162017"=>
        {:postseason=>
