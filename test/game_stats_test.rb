@@ -37,9 +37,9 @@ class GameStatsTest < MiniTest::Test
 
   def test_count_of_games_by_season
     assert_equal ({
-    "20122013"=>7,
-    "20162017"=>4,
-    "20142015"=>1
+      "20122013"=>7,
+      "20162017"=>4,
+      "20142015"=>1
     }), @stat_tracker.count_of_games_by_season
   end
 
