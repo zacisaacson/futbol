@@ -111,13 +111,10 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.head_to_head("18")
 #   end
-<<<<<<< HEAD
-=======
+
   def test_generate_post_and_regular
     assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
   end
-
->>>>>>> refactor_tests
 
   def test_generate_per_season_hash
     assert_equal ({}), @stat_tracker.generate_per_season_hash("20")
