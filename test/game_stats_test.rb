@@ -54,4 +54,5 @@ class GameStatsTest < MiniTest::Test
       "20142015"=>5.0
     }), @stat_tracker.average_goals_by_season
   end
+
 end

@@ -38,7 +38,6 @@ module TeamStats
     generate_percent(team_id)[1]
   end
 
-
   def biggest_team_blowout(team_id)
     generate_goals_difference(team_id)[0]
   end
@@ -56,14 +55,10 @@ module TeamStats
   end
 
   def seasonal_summary(team_id)
-    summary = {}
-    @game_teams[team_id].each do |game|
-      summary[@games[game.game_id].season]
-      summary[@games[game.game_id].season]
-    end
+    generate_inner_hash_for_summary(team_id)
   end
 
-"------------------------SUPPORT METHODS--------------------------------------"
+# helper methods
 
   def generate_post_and_regular(team_id)
     game_ids = []
@@ -79,7 +74,6 @@ module TeamStats
     end
     @game_teams[team_id].each {|game| game_ids << game.game_id}
     game_ids.each do |game_id|
-      # require "pry"; binding.pry
       if @games[game_id].type == "Postseason" &&  (post_and_reg[@games[game_id].season][:postseason] == nil)
         post_and_reg[@games[game_id].season][:postseason] = [game_id]
       elsif @games[game_id].type == "Postseason" && !(post_and_reg[@games[game_id].season][:postseason] == nil)
@@ -91,10 +85,6 @@ module TeamStats
       end
     end
     post_and_reg
-  end
-
-  def seasonal_summary(team_id)
-    generate_inner_hash_for_summary(team_id)
   end
 
   def generate_inner_hash_for_summary(team_id)
@@ -147,7 +137,6 @@ module TeamStats
     game_num
   end
 
-
   def goals(game_teams)
     goals = 0
     game_teams.each do |game|
@@ -167,7 +156,6 @@ module TeamStats
     end
     allowed
   end
-
 
   def generate_average(num,divisor)
     if divisor == 0
@@ -281,6 +269,5 @@ module TeamStats
     min = seasons.min_by {|id, count| count}[0]
     @min_max = [min, max, seasons]
   end
-
 
 end

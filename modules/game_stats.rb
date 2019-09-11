@@ -1,5 +1,5 @@
 module GameStats
-  
+
   def highest_total_score
     game = @games.max_by do |id, object|
       object.away_goals + object.home_goals
@@ -60,4 +60,5 @@ module GameStats
       goals_by_season[season] = (goals / count_of_games_by_season[season].to_f).round(2)
     end
   end
+  
 end

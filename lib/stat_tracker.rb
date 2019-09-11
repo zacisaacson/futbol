@@ -1,15 +1,8 @@
 require 'csv'
-<<<<<<< HEAD
-require_relative 'game_stats'
-require_relative 'league_stats'
-require_relative 'team_stats'
-require_relative 'season_stats'
-=======
-require_relative '../modulars/game_stats'
-require_relative '../modulars/league_stats'
-require_relative '../modulars/team_stats'
->>>>>>> master
-
+require_relative '../modules/game_stats'
+require_relative '../modules/league_stats'
+require_relative '../modules/team_stats'
+require_relative '../modules/season_stats'
 
 class StatTracker
   include GameStats
@@ -20,14 +13,11 @@ class StatTracker
               :teams,
               :game_teams
 
-
   def initialize(hash_game_objs, hash_team_objs, hash_game_teams_objs)
     @games = hash_game_objs
     @teams = hash_team_objs
     @game_teams = hash_game_teams_objs
   end
-
-
 
   def StatTracker.from_csv(locations)
 
@@ -45,7 +35,6 @@ class StatTracker
       teams[team.team_id] = team
     end
 
-
     CSV.foreach(locations[:game_teams], headers: true) do |row|
     game_team =  GameTeams.new(row.to_s.chomp)
       if game_teams.has_key?(game_team.team_id)
@@ -57,6 +46,5 @@ class StatTracker
 
     StatTracker.new(games, teams, game_teams)
   end
-
 
 end

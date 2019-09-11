@@ -14,7 +14,6 @@ module LeagueStats
     @teams[min[0]].teamName
   end
 
-
   def best_defense
     min = generate_average_allowed.min_by {|team, allowed| allowed }[0]
     @teams[min].teamName
@@ -49,7 +48,6 @@ module LeagueStats
     @teams[min].teamName
   end
 
-
   def winningest_team
     highest = calculate_percents[2].max_by {|id, percent| percent}[0]
     @teams[highest].teamName
@@ -80,8 +78,7 @@ module LeagueStats
     worst_fans
   end
 
-"----------------------SUPPORT METHODS-----------------------------------------"
-
+# helper methods
 
   def generate_num_goals_per_team
     @goals_per_team = Hash.new(0)
@@ -167,7 +164,6 @@ module LeagueStats
     @home_and_away_goals
   end
 
-
   def generate_wins
     @wins = []
     return @wins unless @wins.empty?
@@ -175,7 +171,6 @@ module LeagueStats
     @wins_by_home = Hash.new(0)
     @wins_by_away = Hash.new(0)
     @wins = [@wins_by_away, @wins_by_home, @wins_by_team]
-
     @game_teams.each do |id, array|
       array.each do |object|
         if object.result == "WIN"

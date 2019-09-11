@@ -23,6 +23,4 @@ class Game
       @venue_link = line.split(",")[9]
     end
 
-
-
 end
