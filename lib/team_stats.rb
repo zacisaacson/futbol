@@ -252,7 +252,6 @@ module TeamStats
     max = opponent_percent.max_by{ |opp, percent| percent }[0]
     min_team = @teams[min].teamName
     max_team = @teams[max].teamName
-    # require "pry"; binding.pry
     [min_team, max_team, opponent_percent,team_percent]
   end
 
