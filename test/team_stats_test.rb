@@ -149,15 +149,21 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.head_to_head("18")
 #   end
-<<<<<<< HEAD
-=======
+
   def test_generate_post_and_regular
     assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
 >>>>>>> master
   end
 
+<<<<<<< HEAD
 >>>>>>> refactor_tests
 
+=======
+  def test_generate_per_season_hash
+    assert_equal ({}), @stat_tracker.generate_per_season_hash("20")
+  end
+  
+>>>>>>> 2a7817ff1aeb1b560cc98eab17ae5c3ec7b2425d
 
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
