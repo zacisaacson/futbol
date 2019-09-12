@@ -7,7 +7,7 @@ require_relative '../lib/game_teams'
 class LeagueStatsTest < MiniTest::Test
 
   def setup
-    locations = { games: './data/games.csv', teams: './data/teams.csv', game_teams: './data/game_teams.csv' }
+    locations = { games: './data/dummy_games.csv', teams: './data/teams.csv', game_teams: './data/dummy_game_teams.csv' }
     @stat_tracker = StatTracker.from_csv(locations)
   end
 
@@ -48,7 +48,7 @@ class LeagueStatsTest < MiniTest::Test
   end
 
   def test_winningest_team
-    assert_equal "FC Dallas", @stat_tracker.winningest_team
+    assert_equal "Real Salt Lake", @stat_tracker.winningest_team
   end
 
   def test_best_fans
@@ -56,6 +56,6 @@ class LeagueStatsTest < MiniTest::Test
   end
 
   def test_worst_fans
-    assert_equal ["Real Salt Lake"], @stat_tracker.worst_fans
+    assert_equal ["FC Dallas", "Houston Dynamo", "Real Salt Lake"], @stat_tracker.worst_fans
   end
 end

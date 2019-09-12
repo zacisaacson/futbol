@@ -12,21 +12,17 @@ class TeamStatsSupportTest < Minitest::Test
   end
 
   def test_generate_post_and_regular
-    example = {
-      "20122013" => {:post_season=>["2012030221", "2012030222", "2012030223",
-        "2012030224"]
-        }
+    example = {"20122013"=>{:postseason=>["2012030221", "2012030222", "2012030223",
+       "2012030224"], :regular_season=>[]}, "20162017"=>{:postseason=>[],
+       :regular_season=>[]}, "20142015"=>{:postseason=>[], :regular_season=>[]}
       }
     assert_equal example, @stat_tracker.generate_post_and_regular("3")
   end
 
   def test_generate_win_percentage_by_post_and_reg_per_season
-    team_6_win_percentage = {
-      "20122013" => {
-        :post_season => ["2012030221", "2012030222", "2012030223",
-        "2012030224"]
-      }
-    }
+    team_6_win_percentage = {"20122013"=>{:postseason=>["2012030221", "2012030222",
+       "2012030223", "2012030224"], :regular_season=>[]}, "20162017"=>{:postseason=>[],
+          :regular_season=>[]}, "20142015"=>{:postseason=>[], :regular_season=>[]}}
 
     assert_equal team_6_win_percentage, @stat_tracker.generate_post_and_regular("6")
   end

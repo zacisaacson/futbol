@@ -12,6 +12,43 @@ module SeasonStats
     @teams[min].teamName
   end
 
+  def biggest_surprise(season)
+    max = generate_difference(season).max_by {|team, difference| difference }[0]
+    @teams[max].teamName
+  end
+
+  def winningest_coach(season)
+    max = generate_wins_by_coach(season).max_by {|coach, percent| percent}[0]
+    max
+  end
+
+  def worst_coach(season)
+    min = generate_wins_by_coach(season).min_by {|coach, percent| percent}[0]
+    min
+  end
+
+  def most_accurate_team(season)
+    max = generate_team_ratios(season).max_by { |team, ratio| ratio}[0]
+    @teams[max].teamName
+  end
+
+  def least_accurate_team(season)
+    min = generate_team_ratios(season).min_by { |team, ratio| ratio}[0]
+    @teams[min].teamName
+  end
+
+  def most_tackles(season)
+    max = generate_tackles(season).max_by {|team, tackles| tackles}[0]
+    @teams[max].teamName
+  end
+
+  def fewest_tackles(season)
+    min = generate_tackles(season).min_by {|team, tackles| tackles}[0]
+    @teams[min].teamName
+  end
+
+"-----------------------------SUPPORT METHODS----------------------------------"
+
   def generate_difference(season)
     team_ids = []
     @game_teams.each do |team_id, array|
@@ -22,11 +59,6 @@ module SeasonStats
       difference[id] = (seasonal_summary(id)[season][:postseason][:win_percentage] - seasonal_summary(id)[season][:regular_season][:win_percentage])
     end
     difference
-  end
-
-  def biggest_surprise(season)
-    max = generate_difference(season).max_by {|team, difference| difference }[0]
-    @teams[max].teamName
   end
 
   def generate_wins_by_coach(season)
@@ -62,16 +94,6 @@ module SeasonStats
     coach_win_percent
   end
 
-  def winningest_coach(season)
-    max = generate_wins_by_coach(season).max_by {|coach, percent| percent}[0]
-    max
-  end
-
-  def worst_coach(season)
-    min = generate_wins_by_coach(season).min_by {|coach, percent| percent}[0]
-    min
-  end
-
   def generate_games_in_season(season)
     games = []
     @games.each do |game_id, game|
@@ -90,7 +112,6 @@ module SeasonStats
     game_teams
   end
 
-
   def generate_team_ratios(season)
     team_shots = Hash.new(0)
     team_ratios = {}
@@ -106,16 +127,6 @@ module SeasonStats
     team_ratios
   end
 
-  def most_accurate_team(season)
-    max = generate_team_ratios(season).max_by { |team, ratio| ratio}[0]
-    @teams[max].teamName
-  end
-
-  def least_accurate_team(season)
-    min = generate_team_ratios(season).min_by { |team, ratio| ratio}[0]
-    @teams[min].teamName
-  end
-
   def generate_tackles(season)
     tackles = Hash.new(0)
     game_teams = generate_games_in_season(season)
@@ -124,19 +135,4 @@ module SeasonStats
     end
     tackles
   end
-
-  def most_tackles(season)
-    max = generate_tackles(season).max_by {|team, tackles| tackles}[0]
-    @teams[max].teamName
-  end
-
-  def fewest_tackles(season)
-    min = generate_tackles(season).min_by {|team, tackles| tackles}[0]
-    @teams[min].teamName
-  end
-
-
-
-
-
 end

@@ -7,7 +7,7 @@ require_relative '../lib/game_teams'
 class TeamStatsTest < MiniTest::Test
 
   def setup
-    locations = { games: './data/games.csv', teams: './data/teams.csv', game_teams: './data/game_teams.csv' }
+    locations = { games: './data/dummy_games.csv', teams: './data/teams.csv', game_teams: './data/dummy_game_teams.csv' }
     @stat_tracker = StatTracker.from_csv(locations)
   end
 #
@@ -25,17 +25,17 @@ class TeamStatsTest < MiniTest::Test
 
 # # season with the highest win percentage for a team – Integer
   def test_best_season
-    assert_equal "20132014", @stat_tracker.best_season("6")
+    assert_equal "20122013", @stat_tracker.best_season("6")
   end
 #
 # # # season with the lowest win percentage for a team – Integer
   def test_worst_season
-    assert_equal "20142015", @stat_tracker.worst_season("6")
+    assert_equal "20122013", @stat_tracker.worst_season("6")
   end
 # #
 # # average win percentage of all games for a team – Float
   def test_average_win_percentage
-    assert_equal 0.49, @stat_tracker.average_win_percentage("6")
+    assert_equal 0.75, @stat_tracker.average_win_percentage("6")
   end
 # #
 # # # highest number of goals a particular team has scored in a single game – Integer
@@ -72,7 +72,7 @@ class TeamStatsTest < MiniTest::Test
     assert_equal 4, @stat_tracker.worst_loss("18")
   end
 #
-<<<<<<< HEAD
+
 # # record (as a hash - win/loss) against all opponents with the opponents’ names
 # # as keys and the win percentage against that opponent as a value – Hash
   def test_head_to_head
@@ -110,7 +110,7 @@ class TeamStatsTest < MiniTest::Test
      "Columbus Crew SC"=>0.5
     }
     assert_equal expected, @stat_tracker.head_to_head("18")
-=======
+
 # record (as a hash - win/loss) against all opponents with the opponents’ names
 # as keys and the win percentage against that opponent as a value – Hash
 #   def test_head_to_head
@@ -152,23 +152,18 @@ class TeamStatsTest < MiniTest::Test
 
   def test_generate_post_and_regular
     assert_equal ({}), @stat_tracker.generate_post_and_regular("20")
->>>>>>> master
+
   end
 
-<<<<<<< HEAD
->>>>>>> refactor_tests
-
-=======
   def test_generate_per_season_hash
     assert_equal ({}), @stat_tracker.generate_per_season_hash("20")
   end
-  
->>>>>>> 2a7817ff1aeb1b560cc98eab17ae5c3ec7b2425d
+
 
 # for each season that the team has played, a hash that has two keys
 # (:regular_season and :postseason), that each point to a hash with the
 # following keys: :win_percentage, :total_goals_scored, :total_goals_against,
-<<<<<<< HEAD
+
 # # # :average_goals_scored, :average_goals_against – Hash
   def test_seasonal_summary
     expected = {"20162017"=>
@@ -253,9 +248,6 @@ class TeamStatsTest < MiniTest::Test
     assert_equal expected, @stat_tracker.seasonal_summary("18")
   end
 
-
-
-=======
 # # :average_goals_scored, :average_goals_against – Hash
 #   def test_seasonal_summary
 #     expected = {"20162017"=>
@@ -339,5 +331,5 @@ class TeamStatsTest < MiniTest::Test
 #     }
 #     assert_equal expected, @stat_tracker.seasonal_summary("18")
 #   end
->>>>>>> master
+end
 end
